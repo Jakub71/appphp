@@ -20,11 +20,10 @@ class Baza {
     }
 
     function init_tables() {
-        global $db, $kom;
         if (file_exists('baza/baza.sql')){
             $q ="SELECT name FROM sqlite_master WHERE type='table' AND name='menu'";
             $this->db_query($q);
-            if(empty($this->$ret)){
+            if(empty($this->ret)){
                 $sql = file_get_contents('baza/baza.sql');
                 $this->db_exec($sql);
                 $this->kom[]="Utworzono tabeleczkę";
@@ -35,15 +34,17 @@ class Baza {
     function db_query($q){
         try {
             $this->ret = $this->db->query($q, $this->mode)->fetchAll();
+            $this->kom[]= "wykonano: $q\n";
         } catch(PDOException $e){
           $this->kom[]='Błąd'.$e->getMessage()."\n";
         }
         
     }
-}
+
 function db_exec($q){
         try {
             $this->db->exec($q);
+            $this->kom[]= "wykonano: $q\n";
         } catch(PDOException $e){
           $this->kom[]='Błąd'.$e->getMessage()."\n";
         }
