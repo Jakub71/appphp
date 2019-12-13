@@ -7,17 +7,20 @@ ini_set('log_errors', 1);
 ini_set('error_log', 'errorlog.txt');
 
 $kom = array();
-
-
 require_once('inc/db.php');
 require_once('inc/funkcje.php');
+require_once('inc/users.php');
 
 $db = new Baza('baza/baza.db');
+$user = new User();
 
+if (isset($_GET['id']))
+	$id = $_GET['id'];
+else
+	$id = 1;
 
-echo "<h1>Aplikacja PHP</h1>";
+$strona = array();
 
-get_kom($db->kom);
-
+require_once('inc/template.php');
 
 ?>
